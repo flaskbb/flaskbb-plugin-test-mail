@@ -38,6 +38,10 @@ setup(
     name="flaskbb-plugin-test-mail",
     version=version,
     url="https://flaskbb.org",
+    project_urls={
+        "Code": "https://github.com/flaskbb/flaskbb-plugin-test-mail",
+        "Issue Tracker": "https://github.com/flaskbb/flaskbb-plugin-test-mail",
+    },
     license="BSD License",
     author="Peter Justin",
     author_email="peter.justin@outlook.com",

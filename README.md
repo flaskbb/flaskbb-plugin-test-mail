@@ -12,4 +12,4 @@ Install *flaskbb-plugin-test-mail* with
 # License
 
 This project is licensed under the terms of the
-[BSD License](https://github.com/sh4nks/flaskbb-plugins/blob/master/LICENSE).
+[BSD License](https://github.com/flaskbb/flaskbb-plugin-test-mail/blob/master/LICENSE).
