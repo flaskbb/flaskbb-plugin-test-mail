@@ -40,7 +40,7 @@ setup(
     url="https://flaskbb.org",
     project_urls={
         "Code": "https://github.com/flaskbb/flaskbb-plugin-test-mail",
-        "Issue Tracker": "https://github.com/flaskbb/flaskbb-plugin-test-mail",
+        "Issue Tracker": "https://github.com/flaskbb/flaskbb-plugin-test-mail/issues",
     },
     license="BSD License",
     author="Peter Justin",
