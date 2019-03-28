@@ -17,7 +17,7 @@ from flaskbb.display.navigation import NavigationLink
 
 from .views import test_mail_bp
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 hookimpl = HookimplMarker("flaskbb")
 
