@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 """
-    test_mail.forms
-    ~~~~~~~~~~~~~~~
+test_mail.forms
+~~~~~~~~~~~~~~~
 
-    This module contains the forms for the test mail Plugin.
+This module contains the forms for the test mail Plugin.
 
-    :copyright: (c) 2018 by Peter Justin.
-    :license: BSD License, see LICENSE for more details.
+:copyright: (c) 2018 by Peter Justin.
+:license: BSD License, see LICENSE for more details.
 """
+
 from flask_babelplus import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField

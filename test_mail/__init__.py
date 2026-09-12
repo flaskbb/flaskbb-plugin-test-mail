@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
 """
-    test_mail
-    ~~~~~~~~~
+test_mail
+~~~~~~~~~
 
-    A test mail Plugin for FlaskBB.
+A test mail Plugin for FlaskBB.
 
-    :copyright: (c) 2018 by Peter Justin.
-    :license: BSD License, see LICENSE for more details.
+:copyright: (c) 2018 by Peter Justin.
+:license: BSD License, see LICENSE for more details.
 """
+
 import os
 
 from flask_babelplus import gettext as _
-from pluggy import HookimplMarker
-
 from flaskbb.display.navigation import NavigationLink
+from pluggy import HookimplMarker
 
 from .views import test_mail_bp
 
@@ -35,8 +34,4 @@ def flaskbb_load_blueprints(app):
 
 @hookimpl
 def flaskbb_tpl_admin_settings_sidebar():
-    return [
-        NavigationLink(
-            endpoint="test_mail_bp.send_mail", name=_("Test Send Mail")
-        )
-    ]
+    return [NavigationLink(endpoint="test_mail_bp.send_mail", name=_("Test Send Mail"))]
