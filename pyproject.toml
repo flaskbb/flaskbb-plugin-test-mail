@@ -30,7 +30,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://flaskbb.org"
+Homepage = "https://flaskbb.com"
 Repository = "https://github.com/flaskbb/flaskbb-plugin-test-mail"
 Issues = "https://github.com/flaskbb/flaskbb-plugin-test-mail/issues"
 Changelog = "https://github.com/flaskbb/flaskbb-plugin-test-mail/blob/master/CHANGELOG.md"
