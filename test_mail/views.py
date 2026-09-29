@@ -8,7 +8,7 @@ This module contains the views for the test mail Plugin.
 :license: BSD License, see LICENSE for more details.
 """
 
-from flask import Blueprint, flash, redirect, url_for
+from flask import Blueprint, current_app, flash, redirect, url_for
 from flask_babelplus import gettext as _
 from flask_login import current_user
 from flaskbb.extensions import allows
@@ -21,12 +21,20 @@ from .tasks import send_test_mail
 test_mail_bp = Blueprint("test_mail_bp", __name__, template_folder="templates")
 
 
-@allows.requires(IsAdmin)
+def _mail_config():
+    return [
+        (key, "********" if key == "MAIL_PASSWORD" and value else value)
+        for key, value in sorted(current_app.config.items())
+        if key.startswith("MAIL_")
+    ]
+
+
 @test_mail_bp.route("/send", methods=["GET", "POST"])
+@allows.requires(IsAdmin)
 def send_mail():
     form = TestMailForm()
     if form.validate_on_submit():
         send_test_mail.delay(form.email.data, current_user.username)  # pyright: ignore[reportFunctionMemberAccess]
         flash(_("Mail sent to %(email)s", email=form.email.data), "success")
         return redirect(url_for("test_mail_bp.send_mail"))
-    return render_template("test_mail.html", form=form)
+    return render_template("test_mail.html", form=form, mail_config=_mail_config())

@@ -4,37 +4,38 @@
 
 {% block breadcrumb %}
 <ol class="breadcrumb flaskbb-breadcrumb">
-    <li><a href="{{ url_for('forum.index') }}">{% trans %}Forum{% endtrans %}</a></li>
-    <li><a href="{{ url_for('management.overview') }}">{% trans %}Management{% endtrans %}</a></li>
-    <li class="active">{% trans %}Test Mail Server{% endtrans %}</li>
+    <li class="breadcrumb-item"><a href="{{ url_for('forum.index') }}">{% trans %}Forum{% endtrans %}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('management.overview') }}">{% trans %}Management{% endtrans %}</a></li>
+    <li class="breadcrumb-item active">{% trans %}Test Mail Server{% endtrans %}</li>
 </ol>
 {% endblock %}
 
 {% block management_content %}
-{% from theme('macros.html') import horizontal_field, navlink with context %}
+{%- from theme('_macros/form.html') import render_field -%}
 
-
-<div class="col-md-3 settings-col">
-    <div class="nav-sidebar">
-        <ul class="nav">
-            {{ navlink('management.settings', _('Back to Settings')) }}
-        </ul>
-    </div>
-</div><!--/.col-md-3 -->
-
-<div class="col-md-9 settings-col with-left-border">
-    <div class="panel settings-panel">
-        <div class="panel-heading settings-head">
-            <span class="fa fa-user-plus"></span> {{ page_title }}
+<div class="col-md-12 settings-col">
+    <div class="card settings">
+        <div class="card-header settings-header d-flex align-items-center">
+            <span class="fa fa-envelope me-1"></span> {{ page_title }}
         </div>
-        <div class="panel-body settings-body">
-            <div class="settings-content">
-                <form class="form-horizontal settings-form" role="form" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ horizontal_field(form.email) }}
-                    {{ horizontal_field(form.submit) }}
-                </form>
+        <div class="card-body settings-body">
+            <div class="alert-message alert-message-info m-2" role="alert">
+                <h4>{% trans %}Mail configuration{% endtrans %}</h4>
+                <p>{% trans %}The active Flask mail configuration is shown below. The mail password is hidden.{% endtrans %}</p>
+                <dl class="row mb-0">
+                    {% for key, value in mail_config %}
+                    <dt class="col-sm-4"><code>{{ key }}</code></dt>
+                    <dd class="col-sm-8"><code>{{ value }}</code></dd>
+                    {% endfor %}
+                </dl>
             </div>
+
+            <form class="row p-2" role="form" method="post">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.email, div_class="mb-3 col-6") }}
+                {{ render_field(form.submit) }}
+            </form>
+
         </div>
     </div>
 </div>

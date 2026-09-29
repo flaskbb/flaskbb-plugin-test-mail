@@ -10,13 +10,14 @@ A test mail Plugin for FlaskBB.
 
 import os
 
+from flask_allows2 import Permission
 from flask_babelplus import gettext as _
 from flaskbb.display.navigation import NavigationLink
+from flaskbb.user.models import Guest, User
+from flaskbb.utils.requirements import IsAdmin
 from pluggy import HookimplMarker
 
 from .views import test_mail_bp
-
-__version__ = "0.2.1"
 
 hookimpl = HookimplMarker("flaskbb")
 
@@ -33,5 +34,11 @@ def flaskbb_load_blueprints(app):
 
 
 @hookimpl
-def flaskbb_tpl_admin_settings_sidebar():
-    return [NavigationLink(endpoint="test_mail_bp.send_mail", name=_("Test Send Mail"))]
+def flaskbb_tpl_admin_settings_menu(user: User | Guest):
+    if Permission(IsAdmin, identity=user):
+        return [
+            NavigationLink(
+                endpoint="test_mail_bp.send_mail", name=_("Test Send Mail"), icon="fa fa-envelope"
+            )
+        ]
+    return []
