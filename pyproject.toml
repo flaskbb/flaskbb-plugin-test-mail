@@ -48,9 +48,6 @@ only-include = ["test_mail"]
 [tool.hatch.build.targets.wheel]
 packages = ["test_mail"]
 
-[tool.hatch.version]
-path = "test_mail/__init__.py"
-
 [dependency-groups]
 dev = [
     "ipython>=9.9.0",
