@@ -1,22 +1,14 @@
 import pytest
 from flask import g
 from flask_login.test_client import FlaskLoginClient
-from flaskbb.extensions import pluggy
 from tests.fixtures.app import *
 from tests.fixtures.forum import *
 from tests.fixtures.user import *
 
-import test_mail
-from test_mail.views import test_mail_bp
 
-
-@pytest.fixture(scope="package", autouse=True)
-def _register_test_mail(application):
-    """Normally done by create_app() for an entry-point installed plugin."""
-    if "test_mail_bp" not in application.blueprints:
-        application.register_blueprint(test_mail_bp, url_prefix="/test-mail")
-    if not pluggy.is_registered(test_mail):
-        pluggy.register(test_mail, name="test mail")
+@pytest.fixture(scope="package")
+def tested_plugins():
+    return ["test mail"]
 
 
 @pytest.fixture
