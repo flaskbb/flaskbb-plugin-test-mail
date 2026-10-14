@@ -6,7 +6,7 @@ Here you can see the full list of changes between each release.
 Version 0.3.2
 -------------
 
-Unreleased
+Released on October 14th, 2026
 
 * Send the test mail in-process when the Celery broker is unreachable, and show the error
   if sending fails
