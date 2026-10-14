@@ -1,6 +1,8 @@
 import pytest
+from kombu.exceptions import OperationalError
 
 from test_mail import flaskbb_tpl_admin_settings_menu
+from test_mail.tasks import send_test_mail
 
 SEND_URL = "/test-mail/send"
 
@@ -71,3 +73,31 @@ def test_non_admins_cannot_send(client, user, no_csrf, sent_mails):
 
     assert resp.status_code == 403
     assert sent_mails == []
+
+
+def test_the_task_does_not_track_its_result():
+    # a tracked result blocks .delay() for ~20s when the result backend is down
+    assert send_test_mail.ignore_result
+
+
+def test_sending_without_a_broker_mails_in_process(client, admin_user, no_csrf, sent_mails, mocker):
+    mocker.patch.object(send_test_mail, "delay", side_effect=OperationalError)
+
+    resp = client(admin_user).post(SEND_URL, data={"email": "someone@example.org"})
+
+    assert resp.status_code == 302
+    [mail] = sent_mails
+    assert mail["recipients"] == ["someone@example.org"]
+
+
+def test_a_failed_send_without_a_broker_shows_the_error(client, admin_user, no_csrf, mocker):
+    mocker.patch.object(send_test_mail, "delay", side_effect=OperationalError)
+    mocker.patch("test_mail.tasks.send_email", side_effect=ConnectionRefusedError("refused"))
+
+    resp = client(admin_user).post(
+        SEND_URL, data={"email": "someone@example.org"}, follow_redirects=True
+    )
+
+    page = resp.get_data(as_text=True)
+    assert "Could not send the mail: refused" in page
+    assert "Mail sent to" not in page

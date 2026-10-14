@@ -2,7 +2,7 @@
 name = "flaskbb-plugin-test-mail"
 version = "0.3.1"
 dependencies = [
-    "FlaskBB>=3.0.0rc1",
+    "FlaskBB>=3.0.0rc4",
 ]
 requires-python = ">=3.12"
 authors = [

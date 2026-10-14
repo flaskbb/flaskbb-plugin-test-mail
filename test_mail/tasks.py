@@ -10,11 +10,10 @@ This module contains the tasks for the test mail Plugin.
 
 from flask import render_template_string
 from flask_babelplus import gettext as _
-from flaskbb.email import send_email
-from flaskbb.extensions import celery
+from flaskbb.email import send_email, task
 
 
-@celery.task
+@task
 def send_test_mail(email, user):
     """Sends the activation token to the user's email address.
 
